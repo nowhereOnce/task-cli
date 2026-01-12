@@ -21,16 +21,18 @@ def add_task(description: str):
             data["tasks"].append(new_task)
             json.dump(data, file) # Saves into the JSON file
 
-                        
-
     except FileNotFoundError:
         print("There was an error while trying to open the JSON file")
+
 
 def list_tasks():
     try:
         with open("./tasks.json") as file:
             data = json.load(file) 
-            print(json.dumps(data, indent=2))
+            # Print format needs to be changed
+            for task in data["tasks"]:
+                print(f"{task["id"]}:\t{task["description"]} | {task["status"]}")
+
     except FileNotFoundError:
         print("There is no JSON file to read from")
 
@@ -45,7 +47,10 @@ def main():
     parser_add.add_argument("description", type=str, help="Task description")
 
     # List command
-    parrser_add = subparsers.add_parser("list", help="Lists the current tasks")
+    parser_list = subparsers.add_parser("list", help="Lists the current tasks")
+
+    # Delete command 
+    parser_add = subparsers.add_parser("delete", help="Deletes a task given its id.")
 
     args = parser.parse_args()
 
