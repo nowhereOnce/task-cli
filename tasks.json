@@ -4,11 +4,6 @@
             "id": 1,
             "description": "This is the first task",
             "status": "todo"
-        },
-        {
-            "id": 3,
-            "description": "This is the third task",
-            "status": "todo"
         }
     ]
 }
