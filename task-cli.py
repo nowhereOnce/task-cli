@@ -40,15 +40,9 @@ def add_task(description: str):
 
 
 def list_tasks():
-    try:
-        with open("./tasks.json") as file:
-            data = json.load(file) 
-            # Print format needs to be changed
-            for task in data["tasks"]:
-                print(f"{task["id"]}:\t{task["description"]} | {task["status"]}")
-
-    except FileNotFoundError:
-        print("There is no JSON file to read from")
+    data = load_task()
+    for task in data["tasks"]:
+        print(f"{task["id"]}:\t| {task["description"]} | {task["status"]}")
 
 def delete_task(id: int):
     try:
