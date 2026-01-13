@@ -1,33 +1,42 @@
 import argparse
 import json
 import os
-from collections import defaultdict
+
+def load_task():
+    """ 
+    Returns the data inside of the tasks JSON file
+     - If the file doesn't exist or its empty returns a default dict 
+    """
+    if not os.path.exists("tasks.json"):
+        return {"tasks": []}
+    try:
+        with open("tasks.json", "r") as f:
+            return json.load(f)
+    except json.JSONDecodeError: # JSON file exist but its empty
+        return {"tasks": []}
+    
+def save_tasks(data):
+    """ 
+    Saves the data obtained frome the load_task func 
+    """
+    with open("tasks.json", "w") as f:
+        json.dump(data, f, indent=4)
+
 
 def add_task(description: str):
-    try:
-        with open("./tasks.json", "r") as file:
+    data = load_task()
+    max_id = 0
+    for task in data["tasks"]:
+        max_id = max(max_id, int(task["id"]))
+    
+    new_task = {
+        "id": max_id + 1,
+        "description": description,
+        "status": "todo"
+    }
+    data["tasks"].append(new_task)
 
-            max_id = 0
-            if os.stat("./tasks.json").st_size != 0: # If the file is NOT empty
-                data = json.load(file) 
-                for task in data["tasks"]: # Finds the maximum current id to store the new task
-                    max_id = max(max_id, int(task["id"]))
-
-            else: # Empty file
-                data = defaultdict(list)             
-
-        with open("tasks.json", "w") as file:
-            new_task = {
-                "id": max_id + 1,
-                "description": description,
-                "status": "todo"
-            }
-            
-            data["tasks"].append(new_task)
-            json.dump(data, file) # Saves into the JSON file
-
-    except FileNotFoundError:
-        print("There was an error while trying to open the JSON file")
+    save_tasks(data)
 
 
 def list_tasks():
