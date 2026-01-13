@@ -27,5 +27,5 @@ def save_tasks(data):
     """ 
     Saves the data obtained frome the load_task func 
     """
-    with open("tasks.json", "w") as f:
+    with open(DB_PATH, "w") as f:
         json.dump(data, f, indent=4)
