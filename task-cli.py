@@ -1,16 +1,21 @@
 import argparse
 import json
+import os
+from collections import defaultdict
 
 def add_task(description: str):
     try:
-        with open("tasks.json", "r") as file:
-            data = json.load(file) # Python dictionary?
-            data_tasks = data["tasks"]
-            max_id = 0
+        with open("./tasks.json", "r") as file:
 
-            for task in data_tasks: # Finds the maximum current id to store the new task
-                max_id = max(max_id, int(task["id"]))
-        
+            max_id = 0
+            if os.stat("./tasks.json").st_size != 0: # If the file is NOT empty
+                data = json.load(file) 
+                for task in data["tasks"]: # Finds the maximum current id to store the new task
+                    max_id = max(max_id, int(task["id"]))
+
+            else: # Empty file
+                data = defaultdict(list)             
+
         with open("tasks.json", "w") as file:
             new_task = {
                 "id": max_id + 1,
@@ -36,6 +41,19 @@ def list_tasks():
     except FileNotFoundError:
         print("There is no JSON file to read from")
 
+def delete_task(id: int):
+    try:
+        with open("./tasks.json") as file:
+            data = json.load(file)
+        
+        with open("./tasks.json", "w") as file:
+            for task in data["tasks"]:
+                if int(task["id"]) == id:
+                    data["tasks"].remove(task)
+            json.dump(data, file)
+
+    except FileNotFoundError:
+        print("There was an error while trying to open the JSON file")
 
 
 def main():
@@ -51,6 +69,7 @@ def main():
 
     # Delete command 
     parser_add = subparsers.add_parser("delete", help="Deletes a task given its id.")
+    parser_add.add_argument("id", type=int, help="Integer ID of the task to delete.")
 
     args = parser.parse_args()
 
@@ -60,6 +79,8 @@ def main():
     elif args.command == "list":
         list_tasks()
 
+    elif args.command == "delete":
+        delete_task(args.id)
 
 if __name__ == "__main__":
     main()
