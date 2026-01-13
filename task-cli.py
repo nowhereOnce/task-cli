@@ -44,19 +44,11 @@ def list_tasks():
     for task in data["tasks"]:
         print(f"{task["id"]}:\t| {task["description"]} | {task["status"]}")
 
-def delete_task(id: int):
-    try:
-        with open("./tasks.json") as file:
-            data = json.load(file)
-        
-        with open("./tasks.json", "w") as file:
-            for task in data["tasks"]:
-                if int(task["id"]) == id:
-                    data["tasks"].remove(task)
-            json.dump(data, file)
 
-    except FileNotFoundError:
-        print("There was an error while trying to open the JSON file")
+def delete_task(task_id: int):
+    data = load_task()
+    data["tasks"] = [t for t in data["tasks"] if t["id"] != task_id]
+    save_tasks(data)
 
 
 def main():
