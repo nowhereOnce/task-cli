@@ -20,12 +20,16 @@ def setup_parser():
     parser_update.add_argument("id", type=int, help="Integer ID of the task to update.")
     parser_update.add_argument("description", type=str, nargs="?", help="Task description to update")
 
-    # Mark in progress command
+    # Mark in-progress command
     parser_mark_in_progress = subparsers.add_parser("mark-in-progress", help="Marks the given task as \"in progress\" status.")
     parser_mark_in_progress.add_argument("id", type=int, help="Integer ID of the task to mark as \"in progress\".")
 
     # Mark task as done
     parser_mark_done = subparsers.add_parser("mark-done", help="Marks the given task as \"done\" status.")
     parser_mark_done.add_argument("id", type=int, help="Integer ID of the task to mark as \"done\".")
+
+    # Mark task as todo
+    parser_mark_todo = subparsers.add_parser("mark-todo", help="Marks the given task as \"todo\" status.")
+    parser_mark_todo.add_argument("id", type=int, help="Integer ID of the task to mark as \"todo\".")
 
     return parser
