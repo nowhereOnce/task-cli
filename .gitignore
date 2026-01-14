@@ -1,2 +1,3 @@
 task_cli/__pycache__/
 tasks.json
+.venv/
