@@ -11,7 +11,7 @@ def main():
         add_task(args.description)
 
     elif args.command == "list":
-        list_tasks()
+        list_tasks(args.status)
 
     elif args.command == "delete":
         delete_task(args.id)

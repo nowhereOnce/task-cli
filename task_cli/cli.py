@@ -10,6 +10,7 @@ def setup_parser():
 
     # List command
     parser_list = subparsers.add_parser("list", help="Lists the current tasks")
+    parser_list.add_argument("status", type=str, nargs="?", choices=["todo", "done", "in-progress"], help="Status mode for listing.")
 
     # Delete command 
     parser_delete = subparsers.add_parser("delete", help="Deletes a task given its id.")
