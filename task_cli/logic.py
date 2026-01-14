@@ -26,3 +26,12 @@ def delete_task(task_id: int):
     data = load_tasks()
     data["tasks"] = [t for t in data["tasks"] if t["id"] != task_id]
     save_tasks(data)
+
+
+def update_task(task_id: int, description: str):
+    data = load_tasks()
+    for task in data["tasks"]:
+        if task["id"] == task_id:
+            task["description"] = description
+    save_tasks(data)
+    

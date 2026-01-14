@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from task_cli.cli import setup_parser
-from task_cli.logic import add_task, list_tasks, delete_task
+from task_cli.logic import add_task, list_tasks, delete_task, update_task
 
 
 def main():
@@ -15,6 +15,9 @@ def main():
 
     elif args.command == "delete":
         delete_task(args.id)
+
+    elif args.command == "update":
+        update_task(args.id, args.description)
 
 if __name__ == "__main__":
     main()
