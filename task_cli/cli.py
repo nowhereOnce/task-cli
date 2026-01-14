@@ -5,7 +5,7 @@ def setup_parser():
     subparsers = parser.add_subparsers(dest="command")
 
     # Add command
-    parser_add = subparsers.add_parser("add", help="Add a new task")
+    parser_add = subparsers.add_parser("add", help="Adds a new task")
     parser_add.add_argument("description", type=str, help="Task description")
 
     # List command
@@ -19,5 +19,9 @@ def setup_parser():
     parser_update = subparsers.add_parser("update", help="Updates a task given its id and a description")
     parser_update.add_argument("id", type=int, help="Integer ID of the task to update.")
     parser_update.add_argument("description", type=str, nargs="?", help="Task description to update")
+
+    # Mark in progress command
+    parser_mark_in_progress = subparsers.add_parser("mark-in-progress", help="Marks the given task as \"in progress\" status.")
+    parser_mark_in_progress.add_argument("id", type=int, help="Integer ID of the task to mark as \"in progress\".")
 
     return parser
