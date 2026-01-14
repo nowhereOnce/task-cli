@@ -17,8 +17,12 @@ def add_task(description: str):
     save_tasks(data)
 
 
-def list_tasks():
+def list_tasks(status: str):
     data = load_tasks()
+
+    if status:
+        data["tasks"] = [t for t in data["tasks"] if t["status"] == status]
+
     for task in data["tasks"]:
         print(f"{task["id"]}:\t| {task["description"]} | {task["status"]}")
 
@@ -82,6 +86,7 @@ def mark_done(task_id: int):
     task["status"] = "done"
     save_tasks(data)
     print(f"Task {task_id} updated successfully.")
+
 
 def mark_todo(task_id: int):
     data = load_tasks()
