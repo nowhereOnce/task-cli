@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from task_cli.cli import setup_parser
-from task_cli.logic import add_task, list_tasks, delete_task, update_task
+from task_cli.logic import add_task, list_tasks, delete_task, update_task, mark_in_progress
 
 
 def main():
@@ -18,6 +18,9 @@ def main():
 
     elif args.command == "update":
         update_task(args.id, args.description)
+
+    elif args.command == "mark-in-progress":
+        mark_in_progress(args.id)
 
 if __name__ == "__main__":
     main()
