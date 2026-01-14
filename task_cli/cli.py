@@ -24,4 +24,8 @@ def setup_parser():
     parser_mark_in_progress = subparsers.add_parser("mark-in-progress", help="Marks the given task as \"in progress\" status.")
     parser_mark_in_progress.add_argument("id", type=int, help="Integer ID of the task to mark as \"in progress\".")
 
+    # Mark task as done
+    parser_mark_done = subparsers.add_parser("mark-done", help="Marks the given task as \"done\" status.")
+    parser_mark_done.add_argument("id", type=int, help="Integer ID of the task to mark as \"done\".")
+
     return parser

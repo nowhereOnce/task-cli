@@ -68,3 +68,17 @@ def mark_in_progress(task_id: int):
     task["status"] = "in progress"
     save_tasks(data)
     print(f"Task {task_id} updated successfully.")
+
+
+def mark_done(task_id: int):
+    data = load_tasks()
+    
+    task = next((t for t in data["tasks"] if t["id"] == task_id), None)
+    if not task:
+        print(f"Error: Task with ID {task_id} not found.")
+        return
+    
+    print(f"Updating task {task_id}...")
+    task["status"] = "done"
+    save_tasks(data)
+    print(f"Task {task_id} updated successfully.")
