@@ -45,7 +45,7 @@ def list_tasks(status: str):
 
 def delete_task(task_id: int):
     data = load_tasks()
-    
+
     #Validate if the task exists
     task = next((t for t in data["tasks"] if t["id"] == task_id), None)
     if not task:
@@ -54,6 +54,8 @@ def delete_task(task_id: int):
     
     data["tasks"] = [t for t in data["tasks"] if t["id"] != task_id]
     save_tasks(data)
+    print(f"Task {task["id"]} deleted successfully.")
+
 
 
 def update_task(task_id: int, description = None):
