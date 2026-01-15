@@ -4,6 +4,10 @@ from rich.console import Console
 from rich.table import Table
 
 def add_task(description: str):
+    if not description:
+        print("Please enter a valid description.")
+        return
+
     data = load_tasks()
     max_id = 0
     for task in data["tasks"]:
@@ -11,12 +15,13 @@ def add_task(description: str):
     
     new_task = {
         "id": max_id + 1,
-        "description": description,
+        "description": description.strip(),
         "status": "todo"
     }
     data["tasks"].append(new_task)
 
     save_tasks(data)
+    print(f"Task {new_task["id"]} created successfully.")
 
 
 def list_tasks(status: str):
@@ -45,6 +50,10 @@ def delete_task(task_id: int):
 
 
 def update_task(task_id: int, description = None):
+    if description != None and len(description.strip()) == 0:
+        print("Please enter a valid description.")
+        return
+    
     data = load_tasks()
     
     task = next((t for t in data["tasks"] if t["id"] == task_id), None)
