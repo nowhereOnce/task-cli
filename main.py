@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from task_cli.cli import setup_parser
 from task_cli.logic import add_task, list_tasks, delete_task, update_task, mark_in_progress, mark_done, mark_todo
+from task_cli.utils import show_banner
 
 
 def main():
@@ -27,6 +28,10 @@ def main():
 
     elif args.command == "mark-todo":
         mark_todo(args.id)
+
+    elif not args.command:
+        show_banner()
+        parser.print_help()
 
 if __name__ == "__main__":
     main()
