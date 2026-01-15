@@ -2,3 +2,4 @@ task_cli/__pycache__/
 tasks.json
 .venv/
 pyfigletfonts.txt
+pyfiglet_test.py

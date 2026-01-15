@@ -1,14 +1,14 @@
 import json 
-import os
 from pathlib import Path
 
-# We get the path of this file.
-# .parent gives us task_cli/
-# .parent.parent is the root fo the project TASK-CLI/
-BASE_DIR = Path(__file__).resolve().parent.parent
+# Hidden folder to read/save the JSON file from
+# (~/.task-cli)
+DB_DIR = Path.home() / ".task-cli"
 
-# 2. Definimos la ruta del JSON absoluta
-DB_PATH = BASE_DIR / "tasks.json"
+# Make sure the folder exists
+DB_DIR.mkdir(parents=True, exist_ok=True)
+
+DB_PATH = DB_DIR / "tasks.json" # Final path
 
 def load_tasks():
     """ 
