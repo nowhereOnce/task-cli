@@ -59,7 +59,9 @@ def list_tasks(status: str):
                       t_updatedAt_date.strftime('%d-%m-%y') if t["updatedAt"] is not None else "",
                       )
     
+    print()
     console.print(table)
+    print()
 
 
 def delete_task(task_id: int):
