@@ -1,5 +1,7 @@
 import readline
 from task_cli.database import load_tasks, save_tasks
+from rich.console import Console
+from rich.table import Table
 
 def add_task(description: str):
     data = load_tasks()
@@ -19,12 +21,21 @@ def add_task(description: str):
 
 def list_tasks(status: str):
     data = load_tasks()
-
+    tasks = data["tasks"]
     if status:
-        data["tasks"] = [t for t in data["tasks"] if t["status"] == status]
+        tasks = [t for t in tasks if t["status"] == status]
 
-    for task in data["tasks"]:
-        print(f"{task["id"]}:\t| {task["description"]} | {task["status"]}")
+    console = Console()
+    table = Table(show_header=True, header_style="bold magenta")
+    table.add_column("ID", style="dim", width=6)
+    table.add_column("Description", min_width=20)
+    table.add_column("Status", justify="right")
+
+    for t in tasks:
+        color = "green" if t["status"] == "done" else "yellow"
+        table.add_row(str(t["id"]), t["description"], f"[{color}]{t['status']}[/]")
+    
+    console.print(table)
 
 
 def delete_task(task_id: int):
