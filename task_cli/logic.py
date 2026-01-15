@@ -2,6 +2,7 @@ from task_cli.database import load_tasks, save_tasks
 from task_cli.utils import get_prefilled_input
 from rich.console import Console
 from rich.table import Table
+import datetime
 
 def add_task(description: str):
     if not description:
@@ -16,7 +17,9 @@ def add_task(description: str):
     new_task = {
         "id": max_id + 1,
         "description": description.strip(),
-        "status": "todo"
+        "status": "todo",
+        "createdAt": datetime.datetime.now().strftime('%d-%m-%y %H:%M:%S.%f'),
+        "updatedAt": None
     }
     data["tasks"].append(new_task)
 
@@ -32,13 +35,21 @@ def list_tasks(status: str):
 
     console = Console()
     table = Table(show_header=True, header_style="bold magenta")
-    table.add_column("ID", style="dim", width=6)
-    table.add_column("Description", min_width=20, max_width=45)
+    table.add_column("ID", style="dim", width=4)
+    table.add_column("Description", min_width=20, max_width=35)
     table.add_column("Status", justify="right")
+    table.add_column("Created at", width=10)
 
     for t in tasks:
+        # Convert from string to datetime obj
+        t_date_obj = datetime.datetime.strptime(t["createdAt"], '%d-%m-%y %H:%M:%S.%f')
+        t_date = t_date_obj.date()
+
         color = "green" if t["status"] == "done" else "yellow"
-        table.add_row(str(t["id"]), t["description"], f"[{color}]{t['status']}[/]")
+        table.add_row(str(t["id"]), 
+                      t["description"], 
+                      f"[{color}]{t['status']}[/]",
+                      t_date.strftime('%d-%m-%y'))
     
     console.print(table)
 
