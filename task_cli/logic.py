@@ -33,7 +33,7 @@ def list_tasks(status: str):
     console = Console()
     table = Table(show_header=True, header_style="bold magenta")
     table.add_column("ID", style="dim", width=6)
-    table.add_column("Description", min_width=20)
+    table.add_column("Description", min_width=20, max_width=45)
     table.add_column("Status", justify="right")
 
     for t in tasks:

@@ -1,12 +1,11 @@
 import readline
 
 def get_prefilled_input(prompt, prefill=''):
-    """Función auxiliar para manejar la entrada de texto con pre-llenado."""
+    """Aux function to handle the text input with pre-fill"""
     readline.set_startup_hook(lambda: readline.insert_text(prefill))
     try:
         return input(prompt)
     except KeyboardInterrupt:
-        # Lanzamos la excepción hacia arriba para que la lógica decida qué hacer
-        raise 
+        raise # caller function decides the logic after this exception
     finally:
         readline.set_startup_hook()
