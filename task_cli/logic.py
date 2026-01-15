@@ -1,5 +1,5 @@
-import readline
 from task_cli.database import load_tasks, save_tasks
+from task_cli.utils import get_prefilled_input
 from rich.console import Console
 from rich.table import Table
 
@@ -54,22 +54,20 @@ def update_task(task_id: int, description = None):
         return
 
     if description is None:
-        
-        def prefill_input(prompt, prefill=''):
-            readline.set_startup_hook(lambda: readline.insert_text(prefill))
-            try:
-                return input(prompt)
-            finally:
-                readline.set_startup_hook()
+        print(f"\nUpdating task {task_id}... Press [ctrl + c] to cancel.\n")
+        try:
+            description = get_prefilled_input("Description: ", task["description"])
+        except KeyboardInterrupt:
+            print("\nOperation canceled by user.\n")
+            return
 
-        print(f"Updating task {task_id}...")
-        description = prefill_input("Description: ", task["description"])
-
-    # Update data 
-    task["description"] = description
-    save_tasks(data)
-    print(f"Task {task_id} updated successfully.")
-    
+    if description != task["description"]: # if changes were made    
+        # Update data 
+        task["description"] = description
+        save_tasks(data)
+        print(f"Task {task_id} updated successfully.")
+    else:
+        print("No changes made.")
 
 def mark_in_progress(task_id: int):
     data = load_tasks()
