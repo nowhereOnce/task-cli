@@ -1,0 +1,15 @@
+[project]
+name = "task-cli"
+version = "0.1.0"
+description = "A professional Task Manager CLI"
+dependencies = [
+    "pyfiglet",
+    "rich"
+]
+
+[project.scripts]
+task-cli = "task_cli.app:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"

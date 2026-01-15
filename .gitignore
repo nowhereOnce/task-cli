@@ -3,3 +3,4 @@ tasks.json
 .venv/
 pyfigletfonts.txt
 pyfiglet_test.py
+*.egg-info/
