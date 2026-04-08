@@ -4,7 +4,8 @@ version = "0.1.0"
 description = "A professional Task Manager CLI"
 dependencies = [
     "pyfiglet",
-    "rich"
+    "rich",
+    "filelock"
 ]
 
 [project.scripts]
