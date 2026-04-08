@@ -11,6 +11,8 @@ def setup_parser():
     # List command
     parser_list = subparsers.add_parser("list", help="Lists the current tasks")
     parser_list.add_argument("status", type=str, nargs="?", choices=["todo", "done", "in-progress"], help="Status mode for listing.")
+    parser_list.add_argument("--createdAt", "-c", type=str, nargs="?", choices=["asc", "desc"], const="desc", help="Sort tasks by creation date (asc/desc, default: desc)")
+    parser_list.add_argument("--updatedAt", "-u", type=str, nargs="?", choices=["asc", "desc"], const="desc", help="Sort tasks by update date (asc/desc, default: desc)")
 
     # Delete command 
     parser_delete = subparsers.add_parser("delete", help="Deletes a task given its id.")

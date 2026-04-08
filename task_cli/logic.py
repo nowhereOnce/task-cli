@@ -27,11 +27,26 @@ def add_task(description: str):
     print(f"Task {new_task["id"]} created successfully.")
 
 
-def list_tasks(status: str):
+def list_tasks(status: str, createdAt: str = None, updatedAt: str = None):
     data = load_tasks()
     tasks = data["tasks"]
     if status:
         tasks = [t for t in tasks if t["status"] == status]
+
+    if createdAt:
+        reverse = (createdAt == "desc")
+        tasks.sort(key=lambda x: datetime.datetime.strptime(x["createdAt"], '%d-%m-%y %H:%M:%S.%f'), reverse=reverse)
+
+    if updatedAt:
+        # We only sort tasks that have been updated
+        tasks_with_update = [t for t in tasks if t["updatedAt"] is not None]
+        tasks_without_update = [t for t in tasks if t["updatedAt"] is None]
+        
+        reverse = (updatedAt == "desc")
+        tasks_with_update.sort(key=lambda x: datetime.datetime.strptime(x["updatedAt"], '%d-%m-%y %H:%M:%S.%f'), reverse=reverse)
+        
+        # Combine them, keeping those without update at the end (or beginning depending on preference)
+        tasks = tasks_with_update + tasks_without_update 
 
     console = Console()
 
