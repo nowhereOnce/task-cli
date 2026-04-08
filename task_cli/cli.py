@@ -34,5 +34,8 @@ def setup_parser():
     # Mark task as todo
     parser_mark_todo = subparsers.add_parser("mark-todo", help="Marks the given task as \"todo\" status.")
     parser_mark_todo.add_argument("id", type=int, help="Integer ID of the task to mark as \"todo\".")
+    
+    # Clear "done" tasks
+    parser_clear_done = subparsers.add_parser("clear-done", help="Clears all the tasks marked as \"done\".")
 
     return parser

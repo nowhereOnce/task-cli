@@ -165,3 +165,12 @@ def mark_todo(task_id: int):
     save_tasks(data)
     print(f"Task {task_id} updated successfully.")
     
+def clear_done():
+    data = load_tasks()
+    
+    tasks = data["tasks"]
+    tasks = [t for t in tasks if t["status"] != "done"]
+    data["tasks"] = tasks
+    
+    save_tasks(data)
+    print(f"All \"done\" tasks have been cleared successfully.")
